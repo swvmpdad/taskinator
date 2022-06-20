@@ -62,17 +62,31 @@ var createTaskE1 = function(taskDataObj) {
     var taskActionsE1 = createTaskActions(taskIdCounter);
     listItemEl.appendChild(taskActionsE1);
 
-    // add entire list item to list
-    tasksToDoE1.appendChild(listItemEl);
+    switch (taskDataObj.status) {
+        case "to do":
+          taskActionsE1.querySelector("select[name='status-change']").selectedIndex = 0;
+          tasksToDoE1.append(listItemEl);
+          break;
+        case "in progress":
+          taskActionsE1.querySelector("select[name='status-change']").selectedIndex = 1;
+          tasksInProgressE1.append(listItemEl);
+          break;
+        case "completed":
+          taskActionsE1.querySelector("select[name='status-change']").selectedIndex = 2;
+          tasksCompletedE1.append(listItemEl);
+          break;
+        default:
+          console.log("Something went wrong!");
+      };
 
     taskDataObj.id = taskIdCounter;
 
     tasks.push(taskDataObj);
 
+    saveTasks();
+
     // increase task counter for next unique id
     taskIdCounter++;
-
-    saveTasks();
 };
 
 var createTaskActions = function(taskId) {
@@ -242,11 +256,12 @@ var loadTasks = function() {
     }
 };
 
-loadTasks();
 
 formE1.addEventListener("submit", taskFormHandler);
 
 pageContentE1.addEventListener("click", taskButtonHandler);
 
 pageContentE1.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
 
