@@ -31,10 +31,12 @@ var taskFormHandler = function(event) {
             name: taskNameInput,
             type: taskTypeInput
         }
+
+        // send it as an argument to createTaskE1
+        createTaskE1(taskDataObj);
     }
 
-    // send it as an argument to createTaskE1
-    createTaskE1(taskDataObj);
+
 };
 
 var createTaskE1 = function(taskDataObj) {
